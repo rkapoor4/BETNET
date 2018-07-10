@@ -1,33 +1,8 @@
 import express from "express";
+import session from "express-session";
+import path from "path";
 import Models from "./models";
-
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-
-//config passport
-passport.use(new LocalStrategy({
-    	usernameField: 'email',
-    	passwordField: 'password'
-  	},
-	function(username, password, done) {
-		Models.User.findOne({ where:{ email: username } }).then((user)=>{
-			if (user.password!=password) {
-				return done(null, false, { message: 'Incorrect password.' });
-			}
-			return done(null, user);
-		}).catch((err)=>{
-			return done(err);
-		})
-	}
-));
-
-passport.serializeUser(function(user, done) {
-	done(null, user);
-});
-  
-passport.deserializeUser(function(user, done) {
-	done(null, user);
-});
+import passport from "./passport";
 
 //config express
 const app = express();
@@ -36,23 +11,34 @@ app.use(express.static('public'))
 app.use(express.json());    
 app.use(express.urlencoded());
 app.set('view engine', 'ejs');
+app.use(session({ secret: 'anything' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+//app router none secure
 app.get("/",(req,res)=>{
-	render(res,"home",false)
+	if(req.user)
+		res.redirect('/home')
+	else
+		render(req,res,'landing')
 })
 
 app.get('/login',(req,res)=>{
-	render(res,"login",false)
+	if(req.user)
+		res.redirect('/home')
+	else
+		render(req,res,'login')
 })
 
-app.post('/login',passport.authenticate('local', { failureRedirect: '/login' }),(req,res)=>{
-	render(res,"home",false)
+app.post('/login',passport.authenticate('local',{ failureRedirect:'/login' }),(req,res)=>{
+	res.redirect('/home')
 })
 
 app.get('/register',(req,res)=>{
-	render(res,"register",false)
+	if(req.user)
+		res.redirect('/home')
+	else
+		render(req,res,'register')
 })
 
 app.post('/register',(req,res)=>{
@@ -61,25 +47,32 @@ app.post('/register',(req,res)=>{
 		password: req.body.password, 
 		display_name: req.body.display_name
 	}).then((user)=>{
-		render(res,"home",true)
+		res.redirect('/login');
 	}).catch((error)=>{
 		res.status(400).send(error)
 	})
 })
 
-function render(res,view,authenticated){
-	let links = [
-		{ link:"login", name:"Login" },
-		{ link:"register", name:"Register" }
-	]
-	if(authenticated)
-		links = [
-			{ link:"account", name:"Acount" },
-			{ link:"balance", name:"Balance" }
-		]
-	res.render(view,{
-		links: links
-	});
+app.get('/logout',(req, res)=>{
+	req.logOut();
+	res.redirect('/');
+});
+
+//app router secure
+app.get("/home",loggedIn,(req,res)=>{
+	render(req,res,'home')
+})
+
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
+function render(req,res,view){
+	res.render(view,{ user:req.user });
 }
 
 function server(){

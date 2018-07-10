@@ -1,12 +1,48 @@
+html body{
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
+a{
+    text-decoration:none;
+}
+
 .app-header{
+    padding:10px 20px;
+    display: flex;
+    background: rgb(20,147,255);
+    justify-content: space-between;
+}
+
+.app-brand{
     display: flex;
     justify-content: space-between;
 }
+
 .app-header-items{
     display: flex;
     justify-content: space-between;
 }
+
+.app-header-items a{
+    margin-left:20px;
+}
+
 .app-footer{
     display: flex;
     justify-content: space-evenly;
+}
+
+.button{
+    padding:5px 10px;
+    border:solid 1px white;
+    color:white;
+    background:transparent;
+    border-radius: 5px;
+}
+
+.button:hover{
+    background:white;
+    color: rgb(20,147,255);
 }
