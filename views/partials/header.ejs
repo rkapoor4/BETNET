@@ -1,0 +1,10 @@
+<header class="app-header">
+    <div class="app-brand"><a href="/">Brand</a></div>
+    <div class="app-header-items">
+        <% links.forEach(function(link) { %>
+            <a style="margin-left:20px;" href=<%= link.link %>>
+                <%= link.name %>
+            </a>
+        <% }); %>
+    </div>
+</header>
