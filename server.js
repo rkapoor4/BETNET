@@ -17,28 +17,47 @@ app.use(passport.session());
 
 //app router none secure
 app.get("/",(req,res)=>{
-	if(req.user)
-		res.redirect('/home')
-	else
-		render(req,res,'landing')
+	return render(req,res,'landing')
+})
+
+app.get("/about",(req,res)=>{
+	return render(req,res,'about')
+})
+
+app.get("/contact",(req,res)=>{
+	return render(req,res,'contact')
+})
+
+app.get("/copyright",(req,res)=>{
+	return render(req,res,'about')
+})
+
+app.get("/rules_regulations",(req,res)=>{
+	return render(req,res,'rules_regulations')
+})
+
+app.get("/terms_conditions",(req,res)=>{
+	return render(req,res,'terms_conditions')
+})
+
+app.get("/contest-entry",(req,res)=>{
+	return render(req,res,'contest-entry')
 })
 
 app.get('/login',(req,res)=>{
 	if(req.user)
-		res.redirect('/home')
-	else
-		render(req,res,'login')
+		return res.redirect('/')
+	return render(req,res,'login')
 })
 
 app.post('/login',passport.authenticate('local',{ failureRedirect:'/login' }),(req,res)=>{
-	res.redirect('/home')
+	res.redirect('/')
 })
 
 app.get('/register',(req,res)=>{
 	if(req.user)
-		res.redirect('/home')
-	else
-		render(req,res,'register')
+		return res.redirect('/')
+	return render(req,res,'register')
 })
 
 app.post('/register',(req,res)=>{
@@ -47,9 +66,10 @@ app.post('/register',(req,res)=>{
 		password: req.body.password, 
 		display_name: req.body.display_name
 	}).then((user)=>{
-		res.redirect('/login');
+		console.log(user)
+		return render(req,res,'register',{ success:true })
 	}).catch((error)=>{
-		res.status(400).send(error)
+		return render(req,res,'register',{ error:error })
 	})
 })
 
@@ -59,8 +79,12 @@ app.get('/logout',(req, res)=>{
 });
 
 //app router secure
-app.get("/home",loggedIn,(req,res)=>{
-	render(req,res,'home')
+app.get("/account",loggedIn,(req,res)=>{
+	return render(req,res,'account')
+})
+
+app.get("/balance",loggedIn,(req,res)=>{
+	return render(req,res,'balance')
 })
 
 function loggedIn(req, res, next) {
@@ -71,12 +95,12 @@ function loggedIn(req, res, next) {
     }
 }
 
-function render(req,res,view){
-	res.render(view,{ user:req.user });
+function render(req,res,view, varibles = {}){
+	res.render(view,{ user:req.user, ...varibles });
 }
 
 function server(){
-	app.listen(3000, () => {
+	app.listen(process.env.PORT || 3000, () => {
 	  console.log(`listening on 3000`)
 	})
 }

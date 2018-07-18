@@ -8,7 +8,37 @@ a{
     text-decoration:none;
 }
 
+input{
+    padding: 10px 20px;
+    margin: 5px 0px;
+    border: solid 1px #aaa;
+    border-radius: 5px;
+}
+
+input[type=submit] {
+    background-color: rgb(20,147,255);;
+    color: white;
+    padding: 15px 20px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+form{
+    padding:5px;
+    display:flex;
+    flex-direction: column;
+    max-width: 500px;
+    flex-grow:1;
+}
+
 .app-header{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
     padding:10px 20px;
     display: flex;
     background: rgb(20,147,255);
@@ -29,9 +59,33 @@ a{
     margin-left:20px;
 }
 
+.app-content{
+    margin-top: 50px;
+    padding:20px;
+    min-height:80vh;
+}
+
+.vertical-container{
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+}
+
+.content-row{
+    display: flex;
+    justify-content: center;
+}
+
 .app-footer{
+    position:absolute;
+    bottom: 0;
+    left:0;
+    right:0;
+    padding: 20px 5px;
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
+    background: rgb(20,147,255);
 }
 
 .button{

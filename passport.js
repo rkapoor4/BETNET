@@ -10,9 +10,8 @@ passport.use(new LocalStrategy({
   	},
 	function(username, password, done) {
 		Models.User.findOne({ where:{ email: username } }).then((user)=>{
-			if (user.password!=password) {
-				return done(null, false, { message: 'Incorrect password.' });
-			}
+			if(!user || user.password!=password)
+				return done(null, false, { message: 'Incorrect user name or password.' });
 			return done(null, user);
 		}).catch((err)=>{
 			return done(err);

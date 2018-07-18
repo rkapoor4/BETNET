@@ -10,22 +10,9 @@
   <body>
     <% include ./partials/header %>
     <div class="app-content vertical-container">
-      <div class="content-row">
-        <form action="/login" method="post">
-          <label>Email</label>
-          <input type="text" name="email"/>
-
-          <label>Password</label>
-          <input type="password" name="password"/>
-          
-          <input type="submit" value="LOGIN"/>
-        </form>
-      </div>
-      <% if (locals.error) { %>
         <div class="content-row">
-          <%= error%>
+          © BETNET, Inc., 2018
         </div>
-      <% } %>
     </div>
     <% include ./partials/footer %>
   </body>
