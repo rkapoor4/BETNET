@@ -3,7 +3,7 @@ import session from "express-session";
 import path from "path";
 import Models from "./models";
 import passport from "./passport";
-
+import countries from "./public/countries"
 //config express
 const app = express();
 
@@ -51,31 +51,39 @@ app.get('/login',(req,res)=>{
 })
 
 app.post('/login',passport.authenticate('local',{ failureRedirect:'/login' }),(req,res)=>{
-	res.redirect('/')
+	return res.redirect('/')
 })
 
 app.get('/register',(req,res)=>{
 	if(req.user)
 		return res.redirect('/')
-	return render(req,res,'register')
+	return render(req,res,'register',{ countries: countries })
 })
 
 app.post('/register',(req,res)=>{
-	Models.User.create({ 
+	Models.User.create({
+		first_name: req.body.first_name,
+		last_name: req.body.last_name, 
 		email: req.body.email, 
 		password: req.body.password, 
-		display_name: req.body.display_name
+		country: req.body.country,
+		street_address: req.body.street_address,
+		city: req.body.city,
+		state: req.body.state,
+		zip: req.body.zip,
+		phone_number: req.body.phone_number,
+		date_of_birth: req.body.date_of_birth
 	}).then((user)=>{
 		console.log(user)
-		return render(req,res,'register',{ success:true })
+		return res.redirect('/login');
 	}).catch((error)=>{
-		return render(req,res,'register',{ error:error })
+		return render(req,res,'register',{ countries: countries, error:error })
 	})
 })
 
 app.get('/logout',(req, res)=>{
 	req.logOut();
-	res.redirect('/');
+	return res.redirect('/');
 });
 
 //app router secure
@@ -91,12 +99,27 @@ function loggedIn(req, res, next) {
     if (req.user) {
         next();
     } else {
-        res.redirect('/login');
+        return res.redirect('/login');
     }
 }
 
 function render(req,res,view, varibles = {}){
-	res.render(view,{ user:req.user, ...varibles });
+	let user = null
+	if(req.user)
+		user = {
+			first_name: req.user.first_name,
+			last_name: req.user.last_name, 
+			email: req.user.email, 
+			country: req.user.country,
+			street_address: req.user.street_address,
+			city: req.user.city,
+			state: req.user.state,
+			zip: req.user.zip,
+			phone_number: req.user.phone_number,
+			date_of_birth: req.user.date_of_birth,
+			balance:req.user.balance
+		}
+	res.render(view,{ user:user, ...varibles });
 }
 
 function server(){

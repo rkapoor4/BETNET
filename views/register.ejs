@@ -12,17 +12,33 @@
     <div class="app-content vertical-container">
       <div class="content-row">
         <form action="/register" method="post">
-          <label>Email</label>
-          <input type="text" name="email"/>
 
-          <label>Display Name</label>
-          <input type="text" name="display_name"/>
+          <input type="text" name="first_name" placeholder="First Name"/>
 
-          <label>Password</label>
-          <input type="password" name="password"/>
-        
-          <label>Confirm Password</label>
-          <input type="password" name="confirm_password"/>
+          <input type="text" name="last_name" placeholder="Last Name" />
+
+          <input type="text" name="email" placeholder="Email" />
+
+          <input type="password" name="password" placeholder="Password" />
+          
+          <select name="country">
+            <option value="" disabled selected>Select your Country</option>
+            <% for(var i=0; i<countries.length; i++) {%>
+             <option value=<%= countries[i].name %> ><%= countries[i].name %></li>
+            <% } %>
+          </select>
+
+          <input type="text" name="street_address" placeholder="Street Address" />
+
+          <input type="text" name="city" placeholder="City" />
+
+          <input type="text" name="state" placeholder="State" />
+
+          <input type="text" name="zip" placeholder="Zip" />
+
+          <input type="text" name="phone_number" placeholder="Phone Number" />
+
+          <input type="date" name="date_of_birth" />
 
           <input type="submit" value="REGISTER"/>
         </form>
