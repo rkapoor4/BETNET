@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "seed": "node_modules/.bin/sequelize db:seed:all",
     "migrate": "node_modules/.bin/sequelize db:migrate",
-    "start": "babel-node index.js --presets es2015,stage-2"
+    "start": "babel-node index.js --presets es2015,stage-2",
+    "postinstall": "npm run migrate && npm run seed"
   },
   "author": "",
   "license": "ISC",
@@ -17,12 +19,14 @@
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "mysql": "^2.15.0",
+    "numeral": "^2.0.6",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.38.0",
     "sequelize-cli": "^4.0.0",
-    "sqlite3": "^4.0.1"
+    "sqlite3": "^4.0.1",
+    "sweetalert2": "^7.25.6"
   }
 }

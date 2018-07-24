@@ -43,6 +43,10 @@ form{
     flex-grow:1;
 }
 
+td{
+    cursor: pointer;
+}
+
 .app-header{
     position:fixed;
     top:0;

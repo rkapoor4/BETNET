@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1, maximum-scale=1.0, user-scalable=no"">
+    <title>BETNET</title>
+    <script src="jquery.js"></script>
+    <script src="sweet-alert.js"></script>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <% include ../partials/header %>
+    <div class="app-content vertical-container">
+      <div class="content-row">
+        <table>
+          <% for(var i=0; i<contests.length; i++) {%>
+            <tr>
+              <td ondblclick="openDialog(<%= contests[i].id %>,<%= contests[i].entry_fee %>)">
+                $ <%= numeral(contests[i].entry_fee).format('0,0') %></td>
+              <td>
+                # OF CONTESTANTS: 
+                <%= numeral(contests[i].contestant_count).format('0,0')%>
+              </td>
+            </tr>
+          <% } %>
+        </table>
+      </div>
+    </div>
+    <% include ../partials/footer %>
+  </body>
+  <script>
+    function openDialog(id,entry_fee){
+      swal({
+        title: 'Are you sure?',
+        text: "The entry fee for this contest is "+entry_fee,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, enter this contest!'
+      }).then((result) => {
+        if (result.value)
+          $.ajax({
+            url: "/contest-entry", 
+            type: "POST",
+            data: { contest_instance_id: id }
+          }).done((ajax_result)=>{
+            swal({
+              title: ajax_result.code?'Success':'Error',
+              text: ajax_result.message,
+              type: ajax_result.code?'success':'error'
+            }).then((result1)=>{
+              if(ajax_result.code)
+                location.reload();
+            })
+          })
+      })
+    }
+  </script>
+</html>
