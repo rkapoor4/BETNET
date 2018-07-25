@@ -1,0 +1,22 @@
+[ 
+{"name": "USD", "code": "AF"}, 
+{"name": "EUR", "code": "AX"}, 
+{"name": "JPY", "code": "AL"}, 
+{"name": "GBP", "code": "DZ"}, 
+{"name": "AUD", "code": "AS"}, 
+{"name": "CAD", "code": "AD"}, 
+{"name": "CHF", "code": "AO"}, 
+{"name": "CNY", "code": "AI"}, 
+{"name": "SEK", "code": "AQ"}, 
+{"name": "NZD", "code": "AQ"}, 
+{"name": "MXN", "code": "AQ"}, 
+{"name": "SGD", "code": "AQ"}, 
+{"name": "HKD", "code": "AQ"}, 
+{"name": "NOK", "code": "AQ"}, 
+{"name": "KRW", "code": "AQ"}, 
+{"name": "TRY", "code": "AQ"}, 
+{"name": "RUB", "code": "AQ"}, 
+{"name": "INR", "code": "AQ"}, 
+{"name": "BRL", "code": "AQ"}, 
+{"name": "ZAR", "code": "AQ"}
+]

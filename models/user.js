@@ -1,15 +1,17 @@
 'use strict';
-//import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('User', {
-    first_name: { 
+    user_name: { 
       type:DataTypes.STRING,
       unique:true 
     },
+    first_name: { 
+      type:DataTypes.STRING,
+    },
     last_name: { 
       type:DataTypes.STRING,
-      unique:true 
     },
     email: { 
       type:DataTypes.STRING, 
@@ -21,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     password: { 
       type:DataTypes.STRING, 
       validate: { 
-        len:[8,20] 
+        len:[8,60] 
       } 
     },
     country: { 
@@ -55,16 +57,45 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.FLOAT, 
       allowNull: false,
       defaultValue: 0 
+    },
+    currency: { 
+      type:DataTypes.STRING, 
+      allowNull: false
     }
   }, {});
   User.associate = function(models) {
     // associations can be defined here
   };
-  //USER.prototype.generateHash = function(password) {
-  //  return bcrypt.hash(password, bcrypt.genSaltSync(8));
-  //};
-  //USER.prototype.validPassword = function(password) {
-  //  return bcrypt.compare(password, this.password);
-  //};
+
+  User.beforeCreate(function(user, options) {
+    return cryptPassword(user.password).then(success => {
+      user.password = success;
+    }).catch(err => {
+      if (err) console.log(err);
+    });
+  });
+
+  User.prototype.changePassword = function changePassword(password){
+    return cryptPassword(password).then(success => {
+      return this.set('password', success).save()
+    }).catch(err => {
+      if (err) console.log(err);
+    });
+  }
+
+  function cryptPassword(password) {
+    return new Promise(function(resolve, reject) {
+      bcrypt.genSalt(10, function(err, salt) {
+        // Encrypt password using bycrpt module
+        if (err) return reject(err);
+
+        bcrypt.hash(password, salt, function(err, hash) {
+          if (err) return reject(err);
+          return resolve(hash);
+        });
+      });
+    });
+  }
+
   return User;
 };

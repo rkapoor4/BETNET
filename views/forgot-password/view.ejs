@@ -8,13 +8,17 @@
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
-    <% include ./partials/header %>
+    <% include ../partials/header %>
     <div class="app-content vertical-container">
-        <div class="content-row">
-          BETNET, Inc. is a privately held enterprise. It allows users to make wagers on real-life outcomes.
-        </div>
+      <div class="content-row">
+        <form action="/forgot-password" method="post">
+          <input type="text" name="email" placeholder="Email" />
+          
+          <input type="submit" value="Send"/>
+        </form>
+      </div>
     </div>
-    <% include ./partials/footer %>
+    <% include ../partials/footer %>
   </body>
   
 </html>

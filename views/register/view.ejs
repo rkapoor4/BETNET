@@ -13,6 +13,8 @@
       <div class="content-row">
         <form action="/register" method="post">
 
+          <input type="text" name="user_name" placeholder="User Name"/>
+
           <input type="text" name="first_name" placeholder="First Name"/>
 
           <input type="text" name="last_name" placeholder="Last Name" />
@@ -25,6 +27,13 @@
             <option value="" disabled selected>Select your Country</option>
             <% for(var i=0; i<countries.length; i++) {%>
              <option value=<%= countries[i].name %> ><%= countries[i].name %></li>
+            <% } %>
+          </select>
+
+          <select name="currency">
+            <option value="" disabled selected>Select your Currency</option>
+            <% for(var i=0; i<currencies.length; i++) {%>
+             <option value=<%= currencies[i].name %> ><%= currencies[i].name %></li>
             <% } %>
           </select>
 

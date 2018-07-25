@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      user_name: {
+        type: Sequelize.STRING
+      },
       first_name: {
         type: Sequelize.STRING
       },
@@ -43,6 +46,9 @@ module.exports = {
       },
       balance: {
         type: Sequelize.FLOAT
+      },
+      currency: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
