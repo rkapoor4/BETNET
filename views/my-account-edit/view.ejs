@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1, maximum-scale=1.0, user-scalable=no"">
+    <title>BETNET</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <% include ../partials/header %>
+    <div class="app-content">
+        <div class="content-row">
+            <form action="/my-account-edit" method="post" encType="multipart/form-data">
+
+                <input name="user_name" placeholder="User Name" value="<%= user.user_name%>" />
+
+                <input name="first_name" placeholder="First Name" value="<%= user.first_name%>"/>
+
+                <input name="last_name" placeholder="Last Name" value="<%= user.last_name%>"/>
+              
+                <select name="country">
+                    <option value="" disabled selected>Select your Country</option>
+                    <% for(var i=0; i<countries.length; i++) {%>
+                        <option 
+                            value=<%= countries[i].code %> 
+                            <% if(countries[i].code==user.country){ %> selected <% } %>
+                        >
+                            <%= countries[i].name %>
+                        </option>
+                    <% } %>
+                </select>
+    
+                <select name="currency">
+                    <option value="" disabled selected>Select your Currency</option>
+                    <% for(var i=0; i<currencies.length; i++) {%>
+                        <option 
+                            value=<%= currencies[i].name %> 
+                            <% if(currencies[i].name==user.currency){ %> selected <% } %>
+                        >
+                            <%= currencies[i].name %>    
+                        </option>
+                    <% } %>
+                </select>
+
+                <input name="street_address" placeholder="Street Address" value="<%= user.street_address%>"/>
+
+                <input name="city" placeholder="City" value="<%= user.city%>"/>
+
+                <input name="state" placeholder="State" value="<%= user.state%>"/>
+
+                <input name="zip" placeholder="Zip" value="<%= user.zip%>"/>
+
+                <input name="phone_number" placeholder="Phone Number" value="<%= user.phone_number%>"/>
+
+                <input type="date" name="date_of_birth" value="<%= user.date_of_birth%>"/>
+
+                <input type="file" name="file"/>
+                
+                <input type="submit" value="Save"/>
+            </form>
+        </div>
+    </div>
+    <% include ../partials/footer %>
+  </body>
+  
+</html>

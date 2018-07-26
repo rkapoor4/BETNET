@@ -11,7 +11,7 @@
     <% include ../partials/header %>
     <div class="app-content vertical-container">
       <div class="content-row">
-        <form action="/register" method="post">
+        <form action="/register" method="post" encType="multipart/form-data">
 
           <input type="text" name="user_name" placeholder="User Name"/>
 
@@ -26,7 +26,7 @@
           <select name="country">
             <option value="" disabled selected>Select your Country</option>
             <% for(var i=0; i<countries.length; i++) {%>
-             <option value=<%= countries[i].name %> ><%= countries[i].name %></li>
+             <option value=<%= countries[i].code %> ><%= countries[i].name %></li>
             <% } %>
           </select>
 
@@ -48,6 +48,8 @@
           <input type="text" name="phone_number" placeholder="Phone Number" />
 
           <input type="date" name="date_of_birth" />
+
+          <input type="file" name="file"/>
 
           <input type="submit" value="REGISTER"/>
         </form>

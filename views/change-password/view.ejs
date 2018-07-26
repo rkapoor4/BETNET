@@ -11,12 +11,14 @@
     <% include ../partials/header %>
     <div class="app-content vertical-container">
       <div class="content-row">
-        <form action="/forgot-password" method="post">
-          <input type="text" name="email" placeholder="Email" />
+        <form action="/change-password" method="post">
+          <input type="password" name="password" placeholder="Password" />
           
-          <input type="text" name="phone_number" placeholder="Phone Number" />
+          <input type="password" name="new_password" placeholder="New Password" />
 
-          <input type="submit" value="Send"/>
+          <input type="password" name="new_password_confirm" placeholder="New Password Confirmation" />
+
+          <input type="submit" value="Change"/>
         </form>
       </div>
     </div>

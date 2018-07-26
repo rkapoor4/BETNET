@@ -41,6 +41,9 @@ module.exports = {
       phone_number: {
         type: Sequelize.STRING
       },
+      user_id_attachment_url: {
+        type: Sequelize.STRING
+      },
       date_of_birth: {
         type: Sequelize.STRING
       },

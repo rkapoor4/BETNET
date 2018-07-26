@@ -2,8 +2,8 @@
     <div class="app-brand"><a href="/" class="button">Brand</a></div>
     <div class="app-header-items">
             <% if(user){ %>
-                <a href="/account" class="button">Account</a>
-                <a href="/balance" class="button">Balance</a>
+                <a href="/my-account" class="button">Account</a>
+                <a href="/balance" class="button">Balance: <%= user.balance%></a>
                 <a href="/logout" class="button">Logout</a>
             <% } else{ %>  
                 <a href="/login" class="button">Login</a>

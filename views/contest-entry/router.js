@@ -31,7 +31,7 @@ router.get("/",logedIn,(req,res)=>{
 
 router.post("/",logedIn,(req,res)=>{
 	let p1 = Models.ContestInstance.findOne({
-		where:{ id: req.body.contest_instance_id }, 
+		where:{ id: req.fields.contest_instance_id }, 
 		include: [{
         	model: Models.Contest,
         	required: true,
@@ -39,7 +39,7 @@ router.post("/",logedIn,(req,res)=>{
     	}]
     })
 
-	let p2 = Models.Contestant.findOne({ where: { user_id: req.user.id, contest_instance_id: req.body.contest_instance_id } })
+	let p2 = Models.Contestant.findOne({ where: { user_id: req.user.id, contest_instance_id: req.fields.contest_instance_id } })
 	let p3 = Models.User.findOne({ where: { id: req.user.id} })
 	Promise.all([p1,p2,p3]).then((result)=>{
 		let contestInstance = result[0]
@@ -58,7 +58,7 @@ router.post("/",logedIn,(req,res)=>{
 		  	}, { where:{}, transaction: t}).then(function (user) {
 		    	return Models.Contestant.create({
 					user_id: user.id,
-					contest_instance_id: req.body.contest_instance_id,
+					contest_instance_id: req.fields.contest_instance_id,
 					balance: 1000
 			  	}, {transaction: t});
 		  	});
@@ -70,6 +70,20 @@ router.post("/",logedIn,(req,res)=>{
 		}).catch(function (err) {
 			return res.status(200).json({ code:0, message: 'an error occur' });
 		});
+	})
+})
+
+router.post("/contestants",logedIn,(req,res)=>{
+	Models.Contestant.findAll({ 
+		where: { contest_instance_id: req.fields.contest_instance_id },
+		include: [{
+        	model: Models.User,
+        	required: true,
+        	attributes: ['user_name']
+    	}]
+	})
+	.then((contestants)=>{
+		return res.status(200).json({ code:1, data:contestants });
 	})
 })
 

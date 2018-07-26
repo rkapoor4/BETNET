@@ -14,12 +14,17 @@
     <div class="app-content vertical-container">
       <div class="content-row">
         <table>
+          <thead>
+            <tr>
+              <th>ENTRY FEE</th>
+              <th># OF CONTESTANTS</th>
+            </tr>
+          </thead>
           <% for(var i=0; i<contests.length; i++) {%>
             <tr>
               <td ondblclick="openDialog(<%= contests[i].id %>,<%= contests[i].entry_fee %>)">
                 $ <%= numeral(contests[i].entry_fee).format('0,0') %></td>
-              <td>
-                # OF CONTESTANTS: 
+              <td ondblclick="openContestantList(<%= contests[i].id %>)">
                 <%= numeral(contests[i].contestant_count).format('0,0')%>
               </td>
             </tr>
@@ -55,6 +60,28 @@
                 location.reload();
             })
           })
+      })
+    }
+    function openContestantList(id){
+      swal({
+        title: 'Contestants',
+        onOpen: function(){
+          swal.showLoading()
+          $.ajax({
+            url: "/contest-entry/contestants", 
+            type: "POST",
+            data: { contest_instance_id: id }
+          }).done((ajax_result)=>{
+            var HTML = '<table><thead><tr><th>Contestant Name</th><th>Balance</th></tr></thead><tbody>';
+            ajax_result.data.map((contestant)=>{
+              HTML += '<tr><td>' + contestant.User.user_name + '</td><td>' + contestant.balance + '</td></tr>';
+            })
+            HTML += '</tbody></table>'
+            swal({
+              html:HTML
+            })
+          })
+        }
       })
     }
   </script>

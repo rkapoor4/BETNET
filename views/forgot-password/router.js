@@ -12,7 +12,7 @@ router.get('/',function (req, res) {
 
 router.post('/',(req,res)=>{
 	Models.User.findOne({
-		where: { email: req.body.email }
+		where: { email: req.fields.email, phone_number: req.fields.phone_number }
 	}).then((user)=>{
 		if(user){
 			let new_password = randomstring.generate(8);
@@ -24,9 +24,10 @@ router.post('/',(req,res)=>{
 			        text: new_password, // plaintext body
 			    }
 			    sendMail(mailOptions)
-			    render(req,res,'forgot-password/success')
+			    return render(req,res,'forgot-password/success')
 			}).catch((err)=>{ console.log(err) })
 		}
+		return render(req,res,'forgot-password/view')
 	}).catch((error)=>{
 		console.log(error)
 		return render(req,res,'forgot-password/view')

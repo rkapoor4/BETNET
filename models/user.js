@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull: false
     },
+    user_id_attachment_url: { 
+      type:DataTypes.STRING,
+      allowNull: false
+    },
     date_of_birth: { 
       type:DataTypes.STRING,
       allowNull: false

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge">
+    <meta name=viewport content="width=device-width,initial-scale=1, maximum-scale=1.0, user-scalable=no"">
+    <title>BETNET</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <% include ../partials/header %>
+    <div class="app-content">
+        <div class="content-row">
+            <table>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a href="/my-account-edit"><input type="submit" value="EDIT"/></a>
+                        <a href="/change-password"><input type="submit" value="CHANGE PASSWORD"/></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>First name</td>
+                    <td><%= user.first_name %></td>
+                </tr>
+                <tr>
+                    <td>Last name</td>
+                    <td><%= user.last_name %></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><%= user.email %></td>
+                </tr>
+                <tr>
+                    <td>Country code</td>
+                    <td><%= user.country %></td>
+                </tr>
+                <tr>
+                    <td>Street address</td>
+                    <td><%= user.street_address %></td>
+                </tr>
+                <tr>
+                    <td>City</td>
+                    <td><%= user.city %></td>
+                </tr>
+                <tr>
+                    <td>State</td>
+                    <td><%= user.state %></td>
+                </tr>
+                <tr>
+                    <td>Zip code</td>
+                    <td><%= user.zip %></td>
+                </tr>
+                <tr>
+                    <td>Phone number</td>
+                    <td><%= user.phone_number %></td>
+                </tr>
+                <tr>
+                    <td>User ID attachment</td>
+                    <td><img style="width:100%" src=<%= user.user_id_attachment_url %> /></td>
+                </tr>
+                <tr>
+                    <td>Date of birth</td>
+                    <td><%= user.date_of_birth %></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <% include ../partials/footer %>
+  </body>
+  
+</html>
